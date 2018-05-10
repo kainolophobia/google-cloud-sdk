@@ -18,6 +18,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
+import io
 import os
 import re
 import shutil
@@ -196,7 +197,7 @@ class _RcUpdater(object):
 
       # Check whether RC file is a file and store its contents.
       if os.path.isfile(self.rc_path):
-        with open(self.rc_path) as rc_file:
+        with io.open(self.rc_path, mode='r', encoding='utf-8') as rc_file:
           rc_contents = rc_file.read()
           original_rc_contents = rc_contents
       elif os.path.exists(self.rc_path):
@@ -243,7 +244,7 @@ class _RcUpdater(object):
         return
 
       try:
-        with open(self.rc_path, 'w') as rc_file:
+        with io.open(self.rc_path, mode='w', encoding='utf-8') as rc_file:
           rc_file.write(rc_contents)
       except (files.Error, IOError, OSError):
         _TraceAction(
